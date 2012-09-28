@@ -31,13 +31,23 @@ var Transition = function(elem,obj) {
             args[fld] = obj[fld];
         }
         
-        animID = Math.floor(Math.random()*9999);
+        animID = makeID();
         
         // create new css animation with args
         animate();
         
         console.dir(_target)
     };
+    
+    var makeID = function () {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+        for( var i=0; i < 5; i++ )
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
+    }
     
 /*  --------------------------------------------------
     Configuration
@@ -68,6 +78,7 @@ var Transition = function(elem,obj) {
     Animate
     -------------------------------------------------- */
     
+    // doesnt work, but if I uncomment the other animate function it works
     var animate = function() {
         
         setDefaults();
@@ -75,12 +86,27 @@ var Transition = function(elem,obj) {
         if(animation === false) {
             // javascript fallback
         } else {
-            _target.style[ animationstring ] = animID + ' '+args.time+'s '+args.transition+' '+args.repeat+' ';
             
+            var str = animID + ' '+args.time+'s '+args.transition+' '+args.repeat;
+            
+            console.log(str);
+            
+            _target.style[ animationstring ] = animID + ' '+args.time+'s '+args.transition+' '+args.repeat;
+
             var keyframes = '@' + keyframeprefix + 'keyframes ' + animID + ' { '+
-                                'from {' + keyframeprefix + 'transform:rotate( 0deg ) }'+
-                                'to {' + keyframeprefix + 'transform:rotate( 360deg ) }'+
+                                'from { top: '+ _target.offsetTop +'px; left: '+ _target.offsetLeft +'px; opacity: '+ _target.style.opacity +'; } '+
+                                'to { top: '+ args.y +'px; left: '+ args.x +'px; opacity: '+ args.alpha +'; } '+
                             '}';
+                        
+            console.log(keyframes);
+                        
+            if( document.styleSheets && document.styleSheets.length ) {
+                document.styleSheets[0].insertRule( keyframes, 0 );
+            } else {
+                var s = document.createElement( 'style' );
+                s.innerHTML = keyframes;
+                document.getElementsByTagName( 'head' )[ 0 ].appendChild( s );
+            }
         }
     };
     
@@ -92,8 +118,39 @@ var Transition = function(elem,obj) {
         if(typeof args.repeat === "undefined") {
             args.repeat = 1;
         }
+        
+        if(typeof args.x === "undefined") {
+            args.x = _target.offsetLeft;
+        }
+        
+        if(typeof args.y === "undefined") {
+            args.y = _target.offsetTop;
+        }
+        
+        if(typeof args.alpha === "undefined") {
+            
+            if(typeof _target.style.opacity === "undefined") {
+                var o = target.css('opacity');
+                _target.style.opacity = o;
+            }
+            
+            if(_target.style.opacity === undefined) {
+                var o = target.css('opacity');
+                _target.style.opacity = o;
+            }
+            
+            if(_target.style.opacity === '') {
+                _target.style.opacity = 1;
+            }
+            
+            console.log(_target.style.opacity);
+            
+            args.alpha = _target.style.opacity;
+        }
+        
     };
     
+    // works
 //    var animate = function() {
 //        if( animation === false ) {
 //

@@ -23,4 +23,13 @@ root {
     background-color: red;
     width: 100px;
     height: 100px;
+    
+    
 }
+
+
+/*#box {
+   -webkit-animation: AJdKK 1s linear infinite;
+}  
+
+@-webkit-keyframes AJdKK { from { top: 100px; left: 100px; opacity: 1; } to { top: 150px; left: 130px; opacity: 1; } }*/
