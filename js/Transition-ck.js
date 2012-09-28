@@ -1,0 +1,4 @@
+/* 
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */var Transition=function(e,t){var n=e,r=e[0],i={},s,o=function(){h();for(var e in t)i[e]=t[e];s=Math.floor(Math.random()*9999);p();console.dir(r)},u=!1,a="animation",f="",l="Webkit Moz O ms Khtml".split(" "),c="",h=function(){r.style.animationName&&(u=!0);if(u===!1)for(var e=0;e<l.length;e++)if(r.style[l[e]+"AnimationName"]!==undefined){c=l[e];a=c+"Animation";f="-"+c.toLowerCase()+"-";u=!0;break}},p=function(){d();if(u!==!1){r.style[a]=s+" "+i.time+"s "+i.transition+" "+i.repeat+" ";var e="@"+f+"keyframes "+s+" { "+"from {"+f+"transform:rotate( 0deg ) }"+"to {"+f+"transform:rotate( 360deg ) }"+"}"}},d=function(){typeof i.transition=="undefined"&&(i.transition="linear");typeof i.repeat=="undefined"&&(i.repeat=1)};o();return this};

@@ -11,8 +11,20 @@ and open the template in the editor.
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="js/Transition.js"></script>
         <script src="js/Tweener.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/style" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <script>
+            (function($) {
+                $(window).load(function() {
+                    var elem = $('#box');
+                    
+                    Tweener.addTween(elem, { x:130, y: 150, time: 1, transition: 'linear' });
+                    
+                });
+            })(jQuery);
+            
+        </script>
     </head>
     <body>
         <div id="wrap">
