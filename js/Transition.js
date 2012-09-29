@@ -20,16 +20,13 @@ var Transition = function(elem,obj) {
     Init
     -------------------------------------------------- */
     
-        
     var init = function() {
         
         // setup
         config();
         
         // set the arguments
-        for(var fld in obj) {
-            args[fld] = obj[fld];
-        }
+        setArgs();
         
         animID = makeID();
         
@@ -37,6 +34,12 @@ var Transition = function(elem,obj) {
         animate();
         
 //        console.dir(_target)
+    };
+    
+    var setArgs = function() {
+        for(var fld in obj) {
+            args[fld] = obj[fld];
+        }
     };
     
     var makeID = function () {
@@ -55,7 +58,7 @@ var Transition = function(elem,obj) {
     var animation = false,
         animationstring = 'animation',
         translatestring = 'transform',
-        fillmodestring = 'animation-fill-mode'
+        fillmodestring = 'animation-fill-mode',
         keyframeprefix = '',
         domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
         pfx  = '';
@@ -82,7 +85,7 @@ var Transition = function(elem,obj) {
     Animate
     -------------------------------------------------- */
     
-    // doesnt work, but if I uncomment the other animate function it works
+    // TODO: instantiate each animation so I can have multiple tweens per element
     var animate = function() {
         
         setDefaults();
@@ -91,32 +94,37 @@ var Transition = function(elem,obj) {
             // javascript fallback
         } else {
             
-            var str = animID + ' '+args.time+'s '+args.transition+' '+args.repeat;
-            
-            
+//            var str = animID + ' '+args.time+'s '+args.transition+' '+args.repeat;
             
             var keyframes = '@' + keyframeprefix + 'keyframes ' + animID + ' { '+
                                 'from { top: '+ _target.offsetTop +'px; left: '+ _target.offsetLeft +'px; opacity: '+ _target.style.opacity +'; } '+
                                 'to { top: '+ args.y +'px; left: '+ args.x +'px; opacity: '+ args.alpha +'; } '+
                             '}';
                         
-//            console.log(keyframes);
-                        
-            if( document.styleSheets && document.styleSheets.length ) {
-                document.styleSheets[0].insertRule( keyframes, 0 );
-            } else {
+//            if( document.styleSheets && document.styleSheets.length ) {
+//                document.styleSheets[0].insertRule( keyframes, 0 );
+//            } else {
                 var s = document.createElement( 'style' );
                 s.innerHTML = keyframes;
                 document.getElementsByTagName( 'head' )[ 0 ].appendChild( s );
-            }
+//            }
             
-
-            //            console.log(str);
-//            _target.style[ fillmodestring ] = args.fillMode;
+            // animation:                       name        duration       timing-function     delay               iteration-count     direction;
+//            _target.style[ animationstring ] = animID + ' '+args.time+'s '+args.transition+' ' + args.delay + 's '+args.repeat + ' ' + args.fillMode;
             
-            _target.style[ animationstring ] = animID + ' '+args.time+'s '+args.transition+' '+args.repeat + ' ' + args.fillMode;
+            var id = target.attr('id');
             
-//            _target.style
+            var animationCall = '#' + id + ' { '+
+                                    keyframeprefix + 'animation: ' + animID + ' '+args.time+'s '+args.transition+' ' + args.delay + 's '+args.repeat + ' ' + args.fillMode + ';' +
+                                ' } ';
+                            
+//            if( document.styleSheets && document.styleSheets.length ) {
+//                document.styleSheets[0].insertRule( animationCall, 0 );
+//            } else {
+                var a = document.createElement( 'style' );
+                a.innerHTML = animationCall;
+                document.getElementsByTagName( 'head' )[ 0 ].appendChild( a );
+//            }
             
             console.dir(_target);
             
@@ -156,13 +164,15 @@ var Transition = function(elem,obj) {
                 _target.style.opacity = 1;
             }
             
-//            console.log(_target.style.opacity);
-            
             args.alpha = _target.style.opacity;
         }
         
         if(typeof args.fillMode === "undefined") {
             args.fillMode = 'forwards';
+        }
+        
+        if(typeof args.delay === "undefined") {
+            args.delay = 0;
         }
         
     };

@@ -19,7 +19,9 @@ and open the template in the editor.
                 $(window).load(function() {
                     var elem = $('#box');
                     
-                    Tweener.addTween(elem, { x:300, y: 200, time: 1, transition: 'linear', repeat: 1 });
+                    Tweener.addTween(elem, { x:300, y: 200, time: 1, transition: 'ease-in-out', repeat: 1, delay: 1 });
+                    
+                    Tweener.addTween(elem, { y:500, time: 2, transition: 'linear', delay: 3, alpha: 0.5 });
                     
                 });
             })(jQuery);
