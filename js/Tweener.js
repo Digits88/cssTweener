@@ -10,6 +10,6 @@ Tweener = {
         
         var tran = new Transition(elem, args);
         
-        console.dir(tran);
+//        console.dir(tran);
     }
 };

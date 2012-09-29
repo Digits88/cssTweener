@@ -36,7 +36,7 @@ var Transition = function(elem,obj) {
         // create new css animation with args
         animate();
         
-        console.dir(_target)
+//        console.dir(_target)
     };
     
     var makeID = function () {
@@ -54,6 +54,7 @@ var Transition = function(elem,obj) {
     -------------------------------------------------- */
     var animation = false,
         animationstring = 'animation',
+        translatestring = 'transform',
         keyframeprefix = '',
         domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
         pfx  = '';
@@ -66,6 +67,7 @@ var Transition = function(elem,obj) {
                 if( _target.style[ domPrefixes[i] + 'AnimationName' ] !== undefined ) {
                     pfx = domPrefixes[ i ];
                     animationstring = pfx + 'Animation';
+                    translatestring = pfx + 'Transform';
                     keyframeprefix = '-' + pfx.toLowerCase() + '-';
                     animation = true;
                     break;
@@ -89,16 +91,19 @@ var Transition = function(elem,obj) {
             
             var str = animID + ' '+args.time+'s '+args.transition+' '+args.repeat;
             
-            console.log(str);
+//            console.log(str);
             
             _target.style[ animationstring ] = animID + ' '+args.time+'s '+args.transition+' '+args.repeat;
+            _target.style
+            
+            console.dir(_target);
 
             var keyframes = '@' + keyframeprefix + 'keyframes ' + animID + ' { '+
                                 'from { top: '+ _target.offsetTop +'px; left: '+ _target.offsetLeft +'px; opacity: '+ _target.style.opacity +'; } '+
                                 'to { top: '+ args.y +'px; left: '+ args.x +'px; opacity: '+ args.alpha +'; } '+
                             '}';
                         
-            console.log(keyframes);
+//            console.log(keyframes);
                         
             if( document.styleSheets && document.styleSheets.length ) {
                 document.styleSheets[0].insertRule( keyframes, 0 );
@@ -143,7 +148,7 @@ var Transition = function(elem,obj) {
                 _target.style.opacity = 1;
             }
             
-            console.log(_target.style.opacity);
+//            console.log(_target.style.opacity);
             
             args.alpha = _target.style.opacity;
         }
