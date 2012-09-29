@@ -55,6 +55,7 @@ var Transition = function(elem,obj) {
     var animation = false,
         animationstring = 'animation',
         translatestring = 'transform',
+        fillmodestring = 'animation-fill-mode'
         keyframeprefix = '',
         domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
         pfx  = '';
@@ -68,6 +69,7 @@ var Transition = function(elem,obj) {
                     pfx = domPrefixes[ i ];
                     animationstring = pfx + 'Animation';
                     translatestring = pfx + 'Transform';
+                    fillmodestring = pfx + 'AnimationFillMode';
                     keyframeprefix = '-' + pfx.toLowerCase() + '-';
                     animation = true;
                     break;
@@ -91,13 +93,8 @@ var Transition = function(elem,obj) {
             
             var str = animID + ' '+args.time+'s '+args.transition+' '+args.repeat;
             
-//            console.log(str);
             
-            _target.style[ animationstring ] = animID + ' '+args.time+'s '+args.transition+' '+args.repeat;
-            _target.style
             
-            console.dir(_target);
-
             var keyframes = '@' + keyframeprefix + 'keyframes ' + animID + ' { '+
                                 'from { top: '+ _target.offsetTop +'px; left: '+ _target.offsetLeft +'px; opacity: '+ _target.style.opacity +'; } '+
                                 'to { top: '+ args.y +'px; left: '+ args.x +'px; opacity: '+ args.alpha +'; } '+
@@ -112,6 +109,17 @@ var Transition = function(elem,obj) {
                 s.innerHTML = keyframes;
                 document.getElementsByTagName( 'head' )[ 0 ].appendChild( s );
             }
+            
+
+            //            console.log(str);
+//            _target.style[ fillmodestring ] = args.fillMode;
+            
+            _target.style[ animationstring ] = animID + ' '+args.time+'s '+args.transition+' '+args.repeat + ' ' + args.fillMode;
+            
+//            _target.style
+            
+            console.dir(_target);
+            
         }
     };
     
@@ -151,6 +159,10 @@ var Transition = function(elem,obj) {
 //            console.log(_target.style.opacity);
             
             args.alpha = _target.style.opacity;
+        }
+        
+        if(typeof args.fillMode === "undefined") {
+            args.fillMode = 'forwards';
         }
         
     };
