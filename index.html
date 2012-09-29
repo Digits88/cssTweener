@@ -17,11 +17,18 @@ and open the template in the editor.
         <script>
             (function($) {
                 $(window).load(function() {
-                    var elem = $('#box');
+                    var box = $('#box');
+                    var circle = $('#circle');
                     
-                    Tweener.addTween(elem, { x:300, y: 200, time: 1, transition: 'ease-in-out', repeat: 1, delay: 1 });
+                    Tweener.addTween(box, { x:300, y: 300, time: 1, transition: 'ease-in-out', repeat: 1, delay: 1 });
                     
-                    Tweener.addTween(elem, { y:500, time: 2, transition: 'linear', delay: 3, alpha: 0.5 });
+                    Tweener.addTween(box, { x:100, y:100, time: 2, transition: 'linear', delay: 3, alpha: 0.5 });
+                    
+                    Tweener.addTween(circle, { x: 100, y:100, time: 2 });
+                    
+                    console.dir(Tweener);
+                    
+                    Tweener.run();
                     
                 });
             })(jQuery);
@@ -31,6 +38,7 @@ and open the template in the editor.
     <body>
         <div id="wrap">
             <div id="box"></div>
+            <div id="circle"></div>
         </div>
     </body>
 </html>

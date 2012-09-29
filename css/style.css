@@ -23,12 +23,22 @@ root {
     background-color: red;
     width: 100px;
     height: 100px;
-    
-    
+}
+
+#circle {
+    position: absolute;
+    top: 300px;
+    left: 300px;
+    background-color: blue;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
 }
 
 /*#box {
-    -webkit-animation: RPSjt 1s linear infinite;
+    -webkit-animation: first 1s linear 0s 1 forwards, second 1s linear 2s 1 forwards;
 }
 
-@-webkit-keyframes RPSjt { from { top: 100px; left: 100px; opacity: 1; } to { top: 150px; left: 130px; opacity: 1; } } */
+@-webkit-keyframes first { from { top: 100px; left: 100px; opacity: 1; } to { top: 200px; left: 200px; opacity: 1; } } 
+
+@-webkit-keyframes second { from { top: 200px; left: 200px; opacity: 1; } to { top: 120px; left: 120px; opacity: 0; } } */

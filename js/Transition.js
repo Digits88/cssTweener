@@ -4,8 +4,7 @@
  */
 
 
-var Transition = function(elem,obj) {
-    
+var Transition = function(elem,obj,keyframeprefix) {
     
 /*  --------------------------------------------------
     Global
@@ -15,7 +14,6 @@ var Transition = function(elem,obj) {
         args = {}, 
         animID;
 
-
 /*  --------------------------------------------------
     Init
     -------------------------------------------------- */
@@ -23,7 +21,7 @@ var Transition = function(elem,obj) {
     var init = function() {
         
         // setup
-        config();
+//        config();
         
         // set the arguments
         setArgs();
@@ -31,7 +29,7 @@ var Transition = function(elem,obj) {
         animID = makeID();
         
         // create new css animation with args
-        animate();
+        setAnimationStyles();
         
 //        console.dir(_target)
     };
@@ -55,82 +53,122 @@ var Transition = function(elem,obj) {
 /*  --------------------------------------------------
     Configuration
     -------------------------------------------------- */
-    var animation = false,
-        animationstring = 'animation',
-        translatestring = 'transform',
-        fillmodestring = 'animation-fill-mode',
-        keyframeprefix = '',
-        domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
-        pfx  = '';
-        
-    var config = function() {
-        if( _target.style.animationName ) { animation = true; }
-        
-        if( animation === false ) {
-            for( var i = 0; i < domPrefixes.length; i++ ) {
-                if( _target.style[ domPrefixes[i] + 'AnimationName' ] !== undefined ) {
-                    pfx = domPrefixes[ i ];
-                    animationstring = pfx + 'Animation';
-                    translatestring = pfx + 'Transform';
-                    fillmodestring = pfx + 'AnimationFillMode';
-                    keyframeprefix = '-' + pfx.toLowerCase() + '-';
-                    animation = true;
-                    break;
-                }
-            }
-        }
-    };
+//    var animation = false,
+//        animationstring = 'animation',
+//        translatestring = 'transform',
+//        fillmodestring = 'animation-fill-mode',
+//        keyframeprefix = '',
+//        domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
+//        pfx  = '';
+//        
+//    var config = function() {
+//        if( _target.style.animationName ) { animation = true; }
+//        
+//        if( animation === false ) {
+//            for( var i = 0; i < domPrefixes.length; i++ ) {
+//                if( _target.style[ domPrefixes[i] + 'AnimationName' ] !== undefined ) {
+//                    pfx = domPrefixes[ i ];
+//                    animationstring = pfx + 'Animation';
+//                    translatestring = pfx + 'Transform';
+//                    fillmodestring = pfx + 'AnimationFillMode';
+//                    keyframeprefix = '-' + pfx.toLowerCase() + '-';
+//                    animation = true;
+//                    break;
+//                }
+//            }
+//        }
+//    };
+//    
+//    this.getPrefix = function() {
+//        return keyframeprefix;
+//    };
     
 /*  --------------------------------------------------
-    Animate
+    Generate Animation
     -------------------------------------------------- */
     
-    // TODO: instantiate each animation so I can have multiple tweens per element
-    var animate = function() {
-        
+    var keyframes, styleRule;
+    
+    var setAnimationStyles = function() {
         setDefaults();
-        
-        if(animation === false) {
-            // javascript fallback
-        } else {
-            
-//            var str = animID + ' '+args.time+'s '+args.transition+' '+args.repeat;
-            
-            var keyframes = '@' + keyframeprefix + 'keyframes ' + animID + ' { '+
+        keyframes = setKeyframes();
+        styleRule = setStyleRule();
+    };
+    
+    var setKeyframes = function() {
+        var kf = '@' + keyframeprefix + 'keyframes ' + animID + ' { '+
                                 'from { top: '+ _target.offsetTop +'px; left: '+ _target.offsetLeft +'px; opacity: '+ _target.style.opacity +'; } '+
                                 'to { top: '+ args.y +'px; left: '+ args.x +'px; opacity: '+ args.alpha +'; } '+
                             '}';
                         
+        return kf;
+    };
+    
+    // DEPRECATED
+//    var setStyleRule = function() {
+//        return keyframeprefix + 'animation: ' + animID + ' '+args.time+'s '+args.transition+' ' + args.delay + 's '+args.repeat + ' ' + args.fillMode + ';'
+//    };
+    
+    var setStyleRule = function() {
+        return animID + ' '+args.time+'s '+args.transition+' ' + args.delay + 's '+args.repeat + ' ' + args.fillMode;
+    }
+    
+    
+    this.getKeyframeRule = function() {
+        return keyframes;
+    };
+    
+    this.getStyleRule = function() {
+        return styleRule;
+    };
+    
+    // DEPRECATED
+//    var animate = function() {
+//        
+//        setDefaults();
+//        
+//        if(animation === false) {
+//            // javascript fallback
+//        } else {
+//            
+////            var str = animID + ' '+args.time+'s '+args.transition+' '+args.repeat;
+//            
+//            var keyframes = '@' + keyframeprefix + 'keyframes ' + animID + ' { '+
+//                                'from { top: '+ _target.offsetTop +'px; left: '+ _target.offsetLeft +'px; opacity: '+ _target.style.opacity +'; } '+
+//                                'to { top: '+ args.y +'px; left: '+ args.x +'px; opacity: '+ args.alpha +'; } '+
+//                            '}';
+//                        
 //            if( document.styleSheets && document.styleSheets.length ) {
 //                document.styleSheets[0].insertRule( keyframes, 0 );
 //            } else {
-                var s = document.createElement( 'style' );
-                s.innerHTML = keyframes;
-                document.getElementsByTagName( 'head' )[ 0 ].appendChild( s );
+//                var s = document.createElement( 'style' );
+//                s.innerHTML = keyframes;
+//                document.getElementsByTagName( 'head' )[ 0 ].appendChild( s );
 //            }
-            
-            // animation:                       name        duration       timing-function     delay               iteration-count     direction;
-//            _target.style[ animationstring ] = animID + ' '+args.time+'s '+args.transition+' ' + args.delay + 's '+args.repeat + ' ' + args.fillMode;
-            
-            var id = target.attr('id');
-            
-            var animationCall = '#' + id + ' { '+
-                                    keyframeprefix + 'animation: ' + animID + ' '+args.time+'s '+args.transition+' ' + args.delay + 's '+args.repeat + ' ' + args.fillMode + ';' +
-                                ' } ';
-                            
+//            
+//            // animation:                       name        duration       timing-function     delay               iteration-count     direction;
+////            _target.style[ animationstring ] = animID + ' '+args.time+'s '+args.transition+' ' + args.delay + 's '+args.repeat + ' ' + args.fillMode;
+//            
+//            var id = target.attr('id');
+//            
+//            var animationCall = '#' + id + ' { '+
+//                                    keyframeprefix + 'animation: ' + animID + ' '+args.time+'s '+args.transition+' ' + args.delay + 's '+args.repeat + ' ' + args.fillMode + ';' +
+//                                ' } ';
+//                            
 //            if( document.styleSheets && document.styleSheets.length ) {
 //                document.styleSheets[0].insertRule( animationCall, 0 );
 //            } else {
-                var a = document.createElement( 'style' );
-                a.innerHTML = animationCall;
-                document.getElementsByTagName( 'head' )[ 0 ].appendChild( a );
+//                var a = document.createElement( 'style' );
+//                a.innerHTML = animationCall;
+//                document.getElementsByTagName( 'head' )[ 0 ].appendChild( a );
 //            }
-            
-            console.dir(_target);
-            
-        }
-    };
+//            
+//            console.dir(_target);
+//            
+//        }
+//    };
     
+    // TODO: set defaults for width, height or an element
     var setDefaults = function() {
         if(typeof args.transition === "undefined") {
             args.transition = 'linear';
@@ -177,32 +215,9 @@ var Transition = function(elem,obj) {
         
     };
     
-    // works
-//    var animate = function() {
-//        if( animation === false ) {
-//
-//            // animate in JavaScript fallback
-//
-//        } else {
-//            _target.style[ animationstring ] = 'rotate 1s linear infinite';
-//
-//            var keyframes = '@' + keyframeprefix + 'keyframes rotate { '+
-//                        'from {' + keyframeprefix + 'transform:rotate( 0deg ) }'+
-//                        'to {' + keyframeprefix + 'transform:rotate( 360deg ) }'+
-//                      '}';
-//
-//            if( document.styleSheets && document.styleSheets.length ) {
-//                document.styleSheets[0].insertRule( keyframes, 0 );
-//            } else {
-//                var s = document.createElement( 'style' );
-//                s.innerHTML = keyframes;
-//                document.getElementsByTagName( 'head' )[ 0 ].appendChild( s );
-//            }
-//
-//        }
-//    };
+    
     
     init();
     
-    return this;
+//    return this;
 };
