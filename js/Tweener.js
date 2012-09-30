@@ -7,7 +7,7 @@
  * TODO: fix bug with infinite repeats
  * TODO: add Javascript fallback in case of no support
  * TODO: restructure classes to use inheritance
- * TODO: add support for background-color, color, gradient, border-radius
+ * TODO: add support for background-color, color, gradient, border-radius, border
  * 
  */
 
@@ -46,6 +46,13 @@ Tweener = {
                     break;
                 }
             }
+        }
+        
+        // TODO: here is where I'd default to javascript animations
+        if(!this.animation) {
+            console.log('unable to support css3 animations, defaulting to javascript')
+        } else {
+            console.log('your browser supports css3 animations')
         }
     },
     
