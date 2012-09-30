@@ -14,6 +14,8 @@
 
 Tweener = {
     
+    debugMode: false,
+    
     animation: false,
     animationstring: 'animation',
     translatestring: 'transform',
@@ -148,8 +150,10 @@ Tweener = {
             
             styleRule += ' } ';
             
-            console.log(styleRule)
-            console.log(keyframeRule)
+            if(this.debugMode) {
+                console.log(styleRule)
+                console.log(keyframeRule)
+            }
             
             var a = document.createElement( 'style' );
             a.innerHTML = styleRule + '\n' + keyframeRule;

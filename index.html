@@ -7,6 +7,7 @@
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write("<script src='js/lib/jquery.min.js'>\x3C/script>")</script>
         <script src="js/Transition.js"></script>
         <script src="js/Tweener.js"></script>
         <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -38,9 +39,11 @@
                     Tweener.addTween(box, { x: 500, time: 3, transition: 'linear', delay: 5, alpha: 1 });
                     
                     
+                    var alertMe = function() {
+                        console.log('animation completed from callback');
+                    };
                     
-                    Tweener.addTween(greenBox, { x: 500, y: 100, alpha: 0.5, time: 1, transition: 'ease-in-out', delay: 2, backgroundColor: '#000' });
-                    
+                    Tweener.addTween(greenBox, { x: 500, y: 100, alpha: 0.5, time: 1, transition: 'ease-in-out', delay: 2, backgroundColor: '#000', onComplete: alertMe });
                     
                     
                     Tweener.addTween(zomg, { x: -100, y: 100, time: 1 });
@@ -52,7 +55,7 @@
                     Tweener.addTween(zomg, { x: 500, y: 100, time: 1, delay: 8, alpha: 0.7, width: 200 });
                     
                     
-                    
+                    console.log('tweener object:')
                     console.dir(Tweener);
                     
                     Tweener.run();

@@ -23,7 +23,8 @@ var Transition = function(elem,obj,keyframeprefix) {
         
         animID = makeID();
         
-        setAnimationStyles();
+//        setAnimationStyles();
+        setDefaults();
         
     };
     
@@ -51,69 +52,12 @@ var Transition = function(elem,obj,keyframeprefix) {
     Generate Animation
     -------------------------------------------------- */
     
-    var keyframes, styleRule;
-    
-    var setAnimationStyles = function() {
-        setDefaults();
-//        keyframes = setKeyframes();
-//        styleRule = setStyleRule();
-    };
-    
-    // DEPRECATED
-    // TODO: call this on demand rather than the init function
-//    var setKeyframes = function() {
-//        var kf = '@' + keyframeprefix + 'keyframes ' + animID + ' { '+
-//                                'from { top: '+ _target.offsetTop +'px; '+ 
-//                                        'left: '+ _target.offsetLeft +'px; '+ 
-//                                        'opacity: '+ _target.style.opacity +'; '+ 
-//                                        'width: '+ _target.offsetWidth +'px; '+ 
-//                                        'height: '+ _target.offsetHeight +'px; '+
-//                                        'color: '+ target.css('color') +'; '+
-//                                        'background-color: '+ target.css('background-color') +'; '+
-//                                    '} '+
-//                                'to {   top: '+ args.y +'px; '+ 
-//                                        'left: '+ args.x +'px; '+ 
-//                                        'opacity: '+ args.alpha +'; '+ 
-//                                        'width: '+ args.width +'px; '+ 
-//                                        'height: '+ args.height +'px; '+ 
-//                                        'color: '+ args.color +'; '+
-//                                        'background-color: '+ args.backgroundColor +'; '+
-//                                    '} '+
-//                            '}';
-//                        
-//        return kf;
+//    var setAnimationStyles = function() {
+//        setDefaults();
 //    };
     
     // TODO: add support for rotation, etc.
     this.updateKeyframes = function(pArgs) {
-//        var x = pArgs.x || _target.offsetLeft,
-//            y = pArgs.y || _target.offsetTop,
-//            opacity = pArgs.alpha || _target.style.opacity,
-//            width = pArgs.width || _target.offsetWidth,
-//            height = pArgs.height || _target.offsetHeight,
-//            color = pArgs.color || target.css('color'),
-//            backgroundColor = pArgs.backgroundColor || target.css('background-color');
-            
-//        var kf = '@' + keyframeprefix + 'keyframes ' + animID + ' { '+
-//                                'from { top: '+ y +'px; '+ 
-//                                        'left: '+ x +'px; '+ 
-//                                        'opacity: '+ opacity +'; '+ 
-//                                        'width: '+ width +'px; '+ 
-//                                        'height: '+ height +'px; '+
-//                                        'color: '+ color +'; '+
-//                                        'background-color: '+ backgroundColor +'; '+
-//                                    '} '+
-//                                'to {   top: '+ args.y +'px; '+ 
-//                                        'left: '+ args.x +'px; '+ 
-//                                        'opacity: '+ args.alpha +'; '+ 
-//                                        'width: '+ args.width +'px; '+ 
-//                                        'height: '+ args.height +'px; '+ 
-//                                        'color: '+ args.color +'; '+
-//                                        'background-color: '+ args.backgroundColor +'; '+
-//                                    '} '+
-//                            '}';
-//                        
-//        return kf;
 
         var from = {
             x: pArgs.x || _target.offsetLeft,
@@ -128,34 +72,8 @@ var Transition = function(elem,obj,keyframeprefix) {
         return genKeyframeRule(from, to);
     };
     
-    // DEPRECATED
-//    var setStyleRule = function() {
-//        return animID + ' '+args.time+'s '+args.transition+' ' + args.delay + 's '+args.repeat + ' ' + args.fillMode;
-//    }
-    
-    
     this.getKeyframeRule = function() {
-//        return keyframes;
-//        var kf = '@' + keyframeprefix + 'keyframes ' + animID + ' { '+
-//                                'from { top: '+ _target.offsetTop +'px; '+ 
-//                                        'left: '+ _target.offsetLeft +'px; '+ 
-//                                        'opacity: '+ _target.style.opacity +'; '+ 
-//                                        'width: '+ _target.offsetWidth +'px; '+ 
-//                                        'height: '+ _target.offsetHeight +'px; '+
-//                                        'color: '+ target.css('color') +'; '+
-//                                        'background-color: '+ target.css('background-color') +'; '+
-//                                    '} '+
-//                                'to {   top: '+ args.y +'px; '+ 
-//                                        'left: '+ args.x +'px; '+ 
-//                                        'opacity: '+ args.alpha +'; '+ 
-//                                        'width: '+ args.width +'px; '+ 
-//                                        'height: '+ args.height +'px; '+ 
-//                                        'color: '+ args.color +'; '+
-//                                        'background-color: '+ args.backgroundColor +'; '+
-//                                    '} '+
-//                            '}';
-//                        
-//        return kf;
+
         var from = {
             y: _target.offsetTop,
             x: _target.offsetLeft,
@@ -195,26 +113,21 @@ var Transition = function(elem,obj,keyframeprefix) {
     };
     
     this.getStyleRule = function() {
-//        return styleRule;
+        
+//        addCallback();
+        
         return animID + ' '+args.time+'s '+args.transition+' ' + args.delay + 's '+args.repeat + ' ' + args.fillMode;
     };
+    
+//    var addCallback = function() {
+//        _target.addEventListener('')
+//    };
     
     // TODO: set defaults for color, background-color, border
     var setDefaults = function() {
         
-        console.dir(_target);
+//        console.dir(_target);
         
-//        if(typeof args.transition === "undefined") {
-//            args.transition = 'linear';
-//        }
-        
-//        if(typeof args.repeat === "undefined") {
-//            args.repeat = 1;
-//        }
-        
-//        if(typeof args.x === "undefined") {
-//            args.x = _target.offsetLeft;
-//        }
 
         args.transition =           (typeof args.transition === "undefined") ? 'linear' : args.transition;
 
@@ -255,17 +168,34 @@ var Transition = function(elem,obj,keyframeprefix) {
             args.alpha = _target.style.opacity;
         }
         
-//        if(typeof args.fillMode === "undefined") {
-//            args.fillMode = 'forwards';
-//        }
+        if(typeof args.onComplete !== "undefined") {
+            
+            console.dir(args);
+            
+            var pfx = Tweener.pfx,
+                str;
+            
+            switch(pfx) {
+                case 'Moz':
+                    str = 'animationend';
+                    break;
+                case 'Webkit':
+                    str = 'webkitAnimationEnd';
+                    break;
+                case 'O':
+                    str = 'oanimationend';
+                    break;
+                default:
+                    str = 'animationend';
+                    break;
+            }
+            
+            _target.addEventListener(str, args.onComplete, false);
+            
+        }
         
-//        if(typeof args.delay === "undefined") {
-//            args.delay = 0;
-//        }
         
     };
-    
-    
     
     init();
 };
