@@ -1,5 +1,14 @@
 /* 
- * static functions that instantiate specific transition animations
+ * Instantiates new "Transitions" from this static class
+ * 
+ * TODO: add callback "onComplete"
+ * TODO: add support for transforms
+ * TODO: add support for rotation
+ * TODO: fix bug with infinite repeats
+ * TODO: add Javascript fallback in case of no support
+ * TODO: restructure classes to use inheritance
+ * TODO: add support for background-color, color, gradient, border-radius
+ * 
  */
 
 

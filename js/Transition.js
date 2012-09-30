@@ -68,6 +68,7 @@ var Transition = function(elem,obj,keyframeprefix) {
         return kf;
     };
     
+    // TODO: add support for width, height, rotation, etc.
     this.updateKeyframes = function(pArgs) {
         var x = pArgs.x || _target.offsetLeft,
             y = pArgs.y || _target.offsetTop,
