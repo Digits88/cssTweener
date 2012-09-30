@@ -1,6 +1,5 @@
 /* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Specific transition
  */
 
 
@@ -20,18 +19,12 @@ var Transition = function(elem,obj,keyframeprefix) {
     
     var init = function() {
         
-        // setup
-//        config();
-        
-        // set the arguments
         setArgs();
         
         animID = makeID();
         
-        // create new css animation with args
         setAnimationStyles();
         
-//        console.dir(_target)
     };
     
     var setArgs = function() {
@@ -49,39 +42,6 @@ var Transition = function(elem,obj,keyframeprefix) {
 
         return text;
     }
-    
-/*  --------------------------------------------------
-    Configuration
-    -------------------------------------------------- */
-//    var animation = false,
-//        animationstring = 'animation',
-//        translatestring = 'transform',
-//        fillmodestring = 'animation-fill-mode',
-//        keyframeprefix = '',
-//        domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
-//        pfx  = '';
-//        
-//    var config = function() {
-//        if( _target.style.animationName ) { animation = true; }
-//        
-//        if( animation === false ) {
-//            for( var i = 0; i < domPrefixes.length; i++ ) {
-//                if( _target.style[ domPrefixes[i] + 'AnimationName' ] !== undefined ) {
-//                    pfx = domPrefixes[ i ];
-//                    animationstring = pfx + 'Animation';
-//                    translatestring = pfx + 'Transform';
-//                    fillmodestring = pfx + 'AnimationFillMode';
-//                    keyframeprefix = '-' + pfx.toLowerCase() + '-';
-//                    animation = true;
-//                    break;
-//                }
-//            }
-//        }
-//    };
-//    
-//    this.getPrefix = function() {
-//        return keyframeprefix;
-//    };
     
 /*  --------------------------------------------------
     Generate Animation
@@ -104,11 +64,6 @@ var Transition = function(elem,obj,keyframeprefix) {
         return kf;
     };
     
-    // DEPRECATED
-//    var setStyleRule = function() {
-//        return keyframeprefix + 'animation: ' + animID + ' '+args.time+'s '+args.transition+' ' + args.delay + 's '+args.repeat + ' ' + args.fillMode + ';'
-//    };
-    
     var setStyleRule = function() {
         return animID + ' '+args.time+'s '+args.transition+' ' + args.delay + 's '+args.repeat + ' ' + args.fillMode;
     }
@@ -121,52 +76,6 @@ var Transition = function(elem,obj,keyframeprefix) {
     this.getStyleRule = function() {
         return styleRule;
     };
-    
-    // DEPRECATED
-//    var animate = function() {
-//        
-//        setDefaults();
-//        
-//        if(animation === false) {
-//            // javascript fallback
-//        } else {
-//            
-////            var str = animID + ' '+args.time+'s '+args.transition+' '+args.repeat;
-//            
-//            var keyframes = '@' + keyframeprefix + 'keyframes ' + animID + ' { '+
-//                                'from { top: '+ _target.offsetTop +'px; left: '+ _target.offsetLeft +'px; opacity: '+ _target.style.opacity +'; } '+
-//                                'to { top: '+ args.y +'px; left: '+ args.x +'px; opacity: '+ args.alpha +'; } '+
-//                            '}';
-//                        
-//            if( document.styleSheets && document.styleSheets.length ) {
-//                document.styleSheets[0].insertRule( keyframes, 0 );
-//            } else {
-//                var s = document.createElement( 'style' );
-//                s.innerHTML = keyframes;
-//                document.getElementsByTagName( 'head' )[ 0 ].appendChild( s );
-//            }
-//            
-//            // animation:                       name        duration       timing-function     delay               iteration-count     direction;
-////            _target.style[ animationstring ] = animID + ' '+args.time+'s '+args.transition+' ' + args.delay + 's '+args.repeat + ' ' + args.fillMode;
-//            
-//            var id = target.attr('id');
-//            
-//            var animationCall = '#' + id + ' { '+
-//                                    keyframeprefix + 'animation: ' + animID + ' '+args.time+'s '+args.transition+' ' + args.delay + 's '+args.repeat + ' ' + args.fillMode + ';' +
-//                                ' } ';
-//                            
-//            if( document.styleSheets && document.styleSheets.length ) {
-//                document.styleSheets[0].insertRule( animationCall, 0 );
-//            } else {
-//                var a = document.createElement( 'style' );
-//                a.innerHTML = animationCall;
-//                document.getElementsByTagName( 'head' )[ 0 ].appendChild( a );
-//            }
-//            
-//            console.dir(_target);
-//            
-//        }
-//    };
     
     // TODO: set defaults for width, height or an element
     var setDefaults = function() {
@@ -218,6 +127,4 @@ var Transition = function(elem,obj,keyframeprefix) {
     
     
     init();
-    
-//    return this;
 };
