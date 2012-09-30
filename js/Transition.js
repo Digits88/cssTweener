@@ -33,6 +33,10 @@ var Transition = function(elem,obj,keyframeprefix) {
         }
     };
     
+    this.getArgs = function() {
+        return args;
+    };
+    
     var makeID = function () {
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -58,6 +62,19 @@ var Transition = function(elem,obj,keyframeprefix) {
     var setKeyframes = function() {
         var kf = '@' + keyframeprefix + 'keyframes ' + animID + ' { '+
                                 'from { top: '+ _target.offsetTop +'px; left: '+ _target.offsetLeft +'px; opacity: '+ _target.style.opacity +'; } '+
+                                'to { top: '+ args.y +'px; left: '+ args.x +'px; opacity: '+ args.alpha +'; } '+
+                            '}';
+                        
+        return kf;
+    };
+    
+    this.updateKeyframes = function(pArgs) {
+        var x = pArgs.x || _target.offsetLeft,
+            y = pArgs.y || _target.offsetTop,
+            opacity = pArgs.alpha || _target.style.opacity;
+            
+        var kf = '@' + keyframeprefix + 'keyframes ' + animID + ' { '+
+                                'from { top: '+ y +'px; left: '+ x +'px; opacity: '+ opacity +'; } '+
                                 'to { top: '+ args.y +'px; left: '+ args.x +'px; opacity: '+ args.alpha +'; } '+
                             '}';
                         
