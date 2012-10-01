@@ -60,6 +60,15 @@ Tweener = {
     
     addTween: function(elem, args) {
         
+        if(this.animation) {
+            this.addTweenWithCSS(elem, args);
+        } else {
+            this.addTweenWithJavascript(elem, args);
+        }
+        
+    },
+    
+    addTweenWithCSS: function(elem, args) {
         var t = new Transition(elem, args, this.keyframeprefix);
         var appended = false;
         
@@ -82,8 +91,12 @@ Tweener = {
             
 //            this.createAnimationRule(t, elem);
         }
-        
     },
+    
+    addTweenWithJavascript: function(elem, args) {
+        // TODO: animate the entire sequence with Javascript
+    },
+    
     appendAnimationRule: function(t, index) {
         this.elems[index].push(t);
     },
